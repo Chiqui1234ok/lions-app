@@ -1,11 +1,20 @@
-import * as mongoose from 'mongoose';
+import { Schema, model } from 'mongoose';
 import IMongoUser from '../interfaces/IMongoUser';
 
-const UserSchema = new mongoose.Schema(
+const UserSchema = new Schema(
     {
+        // name, description, contact photo, contact info and notes
         name: {
             type: String,
             default: null
+        },
+        description: {
+            type: String,
+            required: false
+        },
+        phone: {
+            type: String,
+            required: false
         },
         email: {
             type: String,
@@ -13,16 +22,59 @@ const UserSchema = new mongoose.Schema(
         },
         password: {
             type: String,
-            required: true
+            required: false
         },
+        businessID: [
+            {
+                type: Schema.ObjectId
+            }
+        ],
         role: {
-            type: Number,
-            default: 1,     // default user
+            buy: [{
+                type: Number
+            }],
+            calendar: [{
+                type: Number
+            }],
+            calendarGoogle: [{
+                type: Number
+            }],
+            calendarMicrosoft: [{
+                type: Number
+            }],
+            clients: [{
+                type: Number
+            }],
+            emailing: [{
+                type: Number
+            }],
+            sale: [{
+                type: Number
+            }],
+            payment: [{
+                type: Number
+            }],
+            product: [{
+                type: Number
+            }],
+            shipping: [{
+                type: Number
+            }],
+            suppliers: [{
+                type: Number
+            }],
+            stripe: [{
+                type: Number
+            }],
         },
         thumbnail: {
             type: Buffer,
-            default: null
+            required: false
         },
+        note: {
+            type: String,
+            required: false
+        }
     },
     {
         timestamps: true
@@ -41,4 +93,4 @@ UserSchema.methods.validatePassword = async function (password: string) {
 
 // export type User = mongoose.InferSchemaType<typeof UserSchema>;
 // export const User = mongoose.model('User', UserSchema);
-export const User = mongoose.model<IMongoUser>('User', UserSchema);
+export const User = model<IMongoUser>('User', UserSchema);
