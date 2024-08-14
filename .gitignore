@@ -1,3 +1,5 @@
 # deps
 back/node_modules/
 back/.env
+back/.docker/.env
+mongodb/*
