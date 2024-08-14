@@ -1,0 +1,25 @@
+services:
+  mongodb:
+    image: mongo
+    container_name: mongodb
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${DEV_MONGODB_ROOT_USER}
+      MONGO_INITDB_ROOT_PASSWORD: ${DEV_MONGODB_ROOT_PASSWORD}
+    ports:
+      - "4002:27017"
+    volumes:
+      - ../mongodb:/data/db
+
+  app:
+    build:
+      context: ..
+      dockerfile: .docker/Dockerfile
+    container_name: app
+    restart: unless-stopped
+    ports:
+      - "4001:4000"
+    volumes:
+      - ../back:/var/www/html
+    depends_on:
+      - mongodb
