@@ -1,0 +1,24 @@
+services:
+  lion-mongodb:
+    image: mongo
+    container_name: lions-mongodb
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${DEV_MONGODB_ROOT_USER}
+      MONGO_INITDB_ROOT_PASSWORD: ${DEV_MONGODB_ROOT_PASSWORD}
+    ports:
+      - "4002:27017"
+    volumes:
+      - ./mongodb:/data/db
+
+  lion-bun:
+    build: .
+    container_name: lions-app
+    restart: unless-stopped
+    ports:
+      - "4001:4000"
+    volumes:
+      - .:/var/www/html
+    depends_on:
+      - lion-mongodb
+    command: "bun run dev"
