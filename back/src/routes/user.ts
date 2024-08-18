@@ -4,7 +4,7 @@ import findUser from '../helpers/findUser';
 import registerUser from '../helpers/registerUser';
 import validatePassword from '../helpers/validatePassword';
 // Interfaces
-import IMongoUser from '../interfaces/IMongoUser';
+import IMongoUser from '../interfaces/User';
 import BunResponse from '../interfaces/BunResponse';
 // JWT
 import signJWT from '../helpers/signJWT';
