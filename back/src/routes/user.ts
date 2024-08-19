@@ -1,14 +1,12 @@
 import { Hono } from 'hono'
+// Classes
+import User from '../classes/User';
+// Middleware
 import validateUser from '../middlewares/validateUser';
-import findUser from '../helpers/findUser';
-import registerUser from '../helpers/registerUser';
-import validatePassword from '../helpers/validatePassword';
 // Interfaces
-import IMongoUser from '../interfaces/User';
+import { BaseUser } from '../interfaces/User';
+import { string } from 'zod';
 import BunResponse from '../interfaces/BunResponse';
-// JWT
-import signJWT from '../helpers/signJWT';
-import { verify } from 'hono/jwt';
 
 const router = new Hono();
 
@@ -21,34 +19,20 @@ router.post('/register', validateUser, async (c) => {
         success: false,
         data: {},
         message: []
-    },
-    user = null,
-    jwt = null;
-
+    };
+    
     try {
-        // 1. Request
-        const request = await c.req.json() as IMongoUser;
-        // 2. Look into DB for duplicated email
-        user = await findUser(request);
-        if(user && user._id) {
-            throw new Error('This email is already taken. You forgot the password?');
-        }
-        // 3. Register user
-        user = await registerUser(request);
-        // 4. Sign user (JWT)
-        jwt = await signJWT(user);
-        // 5. Verify JWT token
-        await verify(jwt, process.env.DEV_JWT_SECRET) ? true : msg.push('Can\'t login you in. Retry in a few seconds.');
+        // 1. Get user's input
+        const request: BaseUser = await c.req.json();
+        request.name = !!request.name ? request.name : 'Usuario';
+        // 2. Register user
+        const userInstance = new User();
+        const user = userInstance.registerUser(request);
 
-        if(user && user._id) {
+        if(user) {
             result.success = true;
+            result.data = user;
             result.message.push('User registered successfully.');
-            result.data = {
-                user: {
-                    email: user.email,
-                    jwt: jwt
-                }
-            }
         }
     } catch(err) {
         console.error(err);
