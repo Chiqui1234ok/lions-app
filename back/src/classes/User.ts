@@ -1,6 +1,11 @@
 import UserModel from '../models/User';
 import { BaseUser, FindUser } from '../interfaces/User';
+// JWT
 import { sign } from 'hono/jwt';
+// Zod
+import { z } from 'zod';
+// Middleware
+import { createMiddleware } from 'hono/factory';
 
 class User {
     // NOTE: checks for email and password will be improved. Right now I just setted up like this so the transpiller will not cry ;)
@@ -48,11 +53,30 @@ class User {
     }
 
     // 2. HELPERS
+    async findUser(query: FindUser) {
+        if(!query || query.field === undefined || query.query === undefined)
+            throw new Error('Field or query not specified.');
+        
+        const queryParams = { [query.field]: query.query };
+        const user = await UserModel.findOne(queryParams);
+        return user;
+    }
+
     async validatePassword(data: BaseUser) {
         if(data.password === undefined)
             throw new Error('The password is empty');
         return await data.validatePassword(data.password);
     }
+
+    // 3. MIDDLEWARES
+    /**
+     * Validates email and password entered by user
+     * email should be a valid email
+     * The password must be more than 7 characters (minimum of 8)
+     */
+    validateUser = createMiddleware(async (c, next) => {
+        console.log(c);
+    });
 }
 
 export default User;
