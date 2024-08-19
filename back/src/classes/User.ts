@@ -1,14 +1,11 @@
+// NOTE: checks for email and password will be improved. Right now I just setted up like this so the transpiller will not cry ;)
+
 import UserModel from '../models/User';
 import { BaseUser, FindUser } from '../interfaces/User';
 // JWT
 import { sign } from 'hono/jwt';
-// Zod
-import { z } from 'zod';
-// Middleware
-import { createMiddleware } from 'hono/factory';
 
 class User {
-    // NOTE: checks for email and password will be improved. Right now I just setted up like this so the transpiller will not cry ;)
     // 1. MAIN FUNCTIONS
     async registerUser(data: Omit<BaseUser, 'encryptPassword' | 'validatePassword'>) {
         // 1. Input validations
@@ -24,14 +21,15 @@ class User {
         // 3. Register new user
         user =  new UserModel({
                     email: data.email,
-                    password: await user.encryptPassword(data.password),
+                    password: '',
                     name: 'Usuario'
                 });
+        user.password = await user.encryptPassword(data.password);
         await user.save();
 
         // 4. Throws an error in case user wasn't registered in DB
         if(!user._id)
-            throw new Error('Could\'t save the user, due database error. Retry in a few minutes.');
+            throw new Error('Could\'t save the user due database error. Retry in a few minutes.');
 
         return user;
     }
@@ -67,16 +65,6 @@ class User {
             throw new Error('The password is empty');
         return await data.validatePassword(data.password);
     }
-
-    // 3. MIDDLEWARES
-    /**
-     * Validates email and password entered by user
-     * email should be a valid email
-     * The password must be more than 7 characters (minimum of 8)
-     */
-    validateUser = createMiddleware(async (c, next) => {
-        console.log(c);
-    });
 }
 
 export default User;
