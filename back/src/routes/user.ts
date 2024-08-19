@@ -22,8 +22,10 @@ router.post('/register', validateUser, async (c) => {
     };
     
     try {
-        // 1. Get user's input
+        // 1. Validations over user's input
         const request: BaseUser = await c.req.json();
+        if(request.email === undefined && request.password === undefined)
+            throw new Error('Invalid email or password.');
         request.name = !!request.name ? request.name : 'Usuario';
         // 2. Register user
         const userInstance = new User();
@@ -36,7 +38,10 @@ router.post('/register', validateUser, async (c) => {
         }
     } catch(err) {
         console.error(err);
-        result.message.push(err.message);
+        if(err instanceof Error)
+            result.message.push(err.message);
+        else
+            result.message.push('An unknown error appeared.');
     }
 
     return c.json(result);
@@ -50,21 +55,27 @@ router.post('/login', validateUser, async (c) => {
     };
 
     try {
-        // 1, Request
-        const request = await c.req.json() as IMongoUser;
+        // 1. Validations over user's input
+        const request: BaseUser = await c.req.json();
+        if(request.email === undefined && request.password === undefined)
+            return c.status(400);
         // 2. Find user
-        const user = await findUser(request) as IMongoUser;
+        const UserInstance = new User();
+        const user = await UserInstance.findUser({field: 'email', query: request.email});
         // 3. Compare user's password with db password
-        const validatedPassword = await validatePassword(request.password, user);
+        const validatedPassword = await UserInstance.validatePassword(user);
         // password ok? If so, I can create a JWT
         if(validatedPassword) {
             result.success = true;
-            result.data = { user: { jwt: await signJWT(user) } };
+            result.data = { user: { jwt: await UserInstance.signUser(user) } };
             result.message.push('User logued in!');
         }
     } catch(err) {
         console.error(err);
-        result.message.push(err.message);
+        if(err instanceof Error)
+            result.message.push(err.message);
+        else
+            result.message.push('An unknown error happens.');
     }
 
     return c.json(result);
