@@ -1,7 +1,7 @@
 import { Schema, model } from 'mongoose';
-import IMongoUser from '../interfaces/User';
+import { BaseClient } from '../interfaces/User';
 
-const UserSchema = new Schema<IMongoUser>(
+const UserSchema = new Schema<BaseClient>(
     {
         name: { type: String, default: null },
         description: { type: String },
@@ -25,6 +25,6 @@ UserSchema.methods.validatePassword = async function (password: string): Promise
     return Bun.password.verify(password, this.password);
 };
 
-const UserModel = model<IMongoUser>('User', UserSchema);
+const UserModel = model<Baseclient>('User', UserSchema);
 
 export default UserModel;
