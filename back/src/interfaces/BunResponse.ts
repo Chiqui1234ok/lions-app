@@ -1,7 +1,7 @@
 interface BunResponse {
-    success: Boolean,
-    data: Object,
-    message: Array
+    success: boolean,
+    data: object,
+    message: []
 }
 
 export default BunResponse;
