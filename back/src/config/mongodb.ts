@@ -1,9 +1,11 @@
-import * as mongoose from 'mongoose'
+import mongoose from 'mongoose'
 
 const mongodb = async () => {
-    await mongoose.connect(process.env.DEV_MONGODB_URL, {})
+    if(process.env.DEV_MONGODB_URL === undefined)
+        throw new Error('Invalid MongoDB connection.');
+    await mongoose.connect(`${process.env.DEV_MONGODB_URL}`, {})
     .then(db => console.log(`Connected to ${process.env.DEV_MONGODB_URL}`))
-    .catch(err => console.log(err));
+    .catch((err:any) => console.log(err));
 
     mongoose.set('debug', process.env.ENV == 'dev' ? true : false);
 }
