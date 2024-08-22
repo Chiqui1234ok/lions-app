@@ -27,7 +27,7 @@ const validateJWT = createMiddleware(async function(c, next) {
         // return decodedPayload;
         next();
     } else {
-        console.error(jwt);
+        console.error(`jwt: ${jwt}`);
         return c.json(result);
     }
 });
