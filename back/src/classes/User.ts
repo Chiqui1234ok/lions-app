@@ -1,7 +1,7 @@
 // NOTE: checks for email and password will be improved. Right now I just setted up like this so the transpiller will not cry ;)
 
-import UserModel from '../models/User';
-import { BaseUser, FindUser } from '../interfaces/User';
+import BaseUserModel from '../models/BaseUser';
+import { BaseUser, FindUser } from '../interfaces/BaseUser';
 // JWT
 import { sign } from 'hono/jwt';
 
@@ -19,12 +19,17 @@ class User {
             throw new Error(`This email already exists, you forgot the password?`);
 
         // 3. Register new user
-        user =  new UserModel({
+        user =  new BaseUserModel({
                     email: data.email,
                     password: '',
-                    name: 'Usuario'
+                    name: 'Usuario',
                 });
         user.password = await user.encryptPassword(data.password);
+        // Set default roles
+        const userRoles = new Map<string, number>();
+        userRoles.set('profile', 1);
+        user.role = userRoles;
+        
         await user.save();
 
         // 4. Throws an error in case user wasn't registered in DB
@@ -56,7 +61,7 @@ class User {
             throw new Error('Field or query not specified.');
         
         const queryParams = { [query.field]: query.query };
-        const user = await UserModel.findOne(queryParams);
+        const user = await BaseUserModel.findOne(queryParams);
         return user;
     }
 
