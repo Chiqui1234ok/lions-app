@@ -4,8 +4,7 @@ import User from '../classes/User';
 // Middleware
 import validateUser from '../middlewares/validateUser';
 // Interfaces
-import { BaseUser } from '../interfaces/User';
-import { string } from 'zod';
+import { BaseUser } from '../interfaces/BaseUser';
 import BunResponse from '../interfaces/BunResponse';
 
 const router = new Hono();
@@ -24,17 +23,16 @@ router.post('/register', validateUser, async (c) => {
     try {
         // 1. Validations over user's input
         const request: BaseUser = await c.req.json();
-        if(request.email === undefined && request.password === undefined)
-            throw new Error('Invalid email or password.');
         request.name = !!request.name ? request.name : 'Usuario';
         // 2. Register user
-        const userInstance = new User();
-        const user = userInstance.registerUser(request);
+        const UserInstance = new User();
+        const user = await UserInstance.registerUser(request);
 
         if(user) {
             result.success = true;
-            result.data = user;
+            result.data = { user };
             result.message.push('User registered successfully.');
+            result.data.jwt = await UserInstance.signUser(user);
         }
     } catch(err) {
         console.error(err);
@@ -57,18 +55,24 @@ router.post('/login', validateUser, async (c) => {
     try {
         // 1. Validations over user's input
         const request: BaseUser = await c.req.json();
-        if(request.email === undefined && request.password === undefined)
-            return c.status(400);
         // 2. Find user
         const UserInstance = new User();
         const user = await UserInstance.findUser({field: 'email', query: request.email});
+        if(!user || !user._id || !user.password) {
+            result.message.push('This user doesn\'t exist.');
+            return c.json(result);
+        }
         // 3. Compare user's password with db password
-        const validatedPassword = await UserInstance.validatePassword(user);
+        const validatedPassword = await user.validatePassword(user.password);
+        console.log('validatedPassword');
+        console.log(validatedPassword);
         // password ok? If so, I can create a JWT
         if(validatedPassword) {
             result.success = true;
             result.data = { user: { jwt: await UserInstance.signUser(user) } };
             result.message.push('User logued in!');
+        } else {
+            result.message.push('Incorrect password.');
         }
     } catch(err) {
         console.error(err);
