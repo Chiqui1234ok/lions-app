@@ -63,9 +63,7 @@ router.post('/login', validateUser, async (c) => {
             return c.json(result);
         }
         // 3. Compare user's password with db password
-        const validatedPassword = await user.validatePassword(user.password);
-        console.log('validatedPassword');
-        console.log(validatedPassword);
+        const validatedPassword = await user.validatePassword(request.password);
         // password ok? If so, I can create a JWT
         if(validatedPassword) {
             result.success = true;
