@@ -1,14 +1,14 @@
 import { Schema, model } from 'mongoose';
 import BaseClient from '../interfaces/BaseClient';
-import NoteModel from './Note';
+import { NoteSchema } from './Note';
 
 const BaseClientSchema = new Schema<BaseClient>(
     {
-        name: { type: String, default: null },
+        name: { type: String },
         phone: { type: String },
         email: { type: String },
         thumbnail: { type: Buffer },
-        note: [NoteModel]
+        note: [NoteSchema],
     },
     {
         timestamps: true
@@ -17,4 +17,4 @@ const BaseClientSchema = new Schema<BaseClient>(
 
 const BaseClientModel = model<BaseClient>('Client', BaseClientSchema);
 
-export default BaseClientModel;
+export { BaseClientSchema, BaseClientModel };
