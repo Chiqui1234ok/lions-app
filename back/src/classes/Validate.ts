@@ -27,7 +27,7 @@ class Validate {
      * @param {string} token - The JSON Web Token to validate.
      * @returns {boolean} True if the JWT is valid, otherwise false.
      */
-    async jwt(token: string) {
+    public async jwt(token: string) {
         const secret = process.env.DEV_JWT_SECRET;
         let jwt = null;
         if(token && secret) {
@@ -36,7 +36,7 @@ class Validate {
             return jwt;
         }
         console.error(`jwt: ${jwt}`);
-        return false;
+        return jwt;
     }
 }
 

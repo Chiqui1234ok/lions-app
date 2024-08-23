@@ -1,0 +1,10 @@
+services:
+  lion-vue:
+    build: .
+    container_name: lions-vue
+    restart: unless-stopped
+    ports:
+      - "4000:8080"
+    volumes:
+      - .:/var/www/html
+    command: "yarn serve"

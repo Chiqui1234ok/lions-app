@@ -13,7 +13,7 @@ services:
 
   lion-bun:
     build: .
-    container_name: lions-app
+    container_name: lions-bun
     restart: unless-stopped
     ports:
       - "4001:4000"

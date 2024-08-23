@@ -7,7 +7,7 @@ import { sign } from 'hono/jwt';
 
 class User {
     // 1. MAIN FUNCTIONS
-    async registerUser(data: Omit<BaseUser, 'encryptPassword' | 'validatePassword'>) {
+    public async registerUser(data: Omit<BaseUser, 'encryptPassword' | 'validatePassword'>) {
         // 1. Input validations
         if(data.email === undefined)
             throw new Error('email must be defined');
@@ -39,7 +39,7 @@ class User {
         return user;
     }
 
-    async signUser(data: BaseUser) {
+    public async signUser(data: BaseUser) {
         if(data.email === undefined || data.role === undefined)
             throw new Error('Please, send a valid user data.');
         if(process.env.DEV_JWT_SECRET === undefined)
@@ -56,7 +56,7 @@ class User {
     }
 
     // 2. HELPERS
-    async findUser(query: FindUser) {
+    public async findUser(query: FindUser) {
         if(!query || query.field === undefined || query.query === undefined)
             throw new Error('Field or query not specified.');
         
@@ -65,7 +65,7 @@ class User {
         return user;
     }
 
-    async validatePassword(data: BaseUser) {
+    public async validatePassword(data: BaseUser) {
         if(data.password === undefined)
             throw new Error('The password is empty');
         return await data.validatePassword(data.password);
