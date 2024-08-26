@@ -12,7 +12,7 @@ const validateJWT = createMiddleware(async function(c, next) {
     },
     jwt = null;
 
-    if(token) {
+    if(token && Bun.env.DEV_JWT_SECRET !== undefined) {
         const splittedAuthorizationString = token.split('Bearer ');
         jwt = await verify(splittedAuthorizationString[1], Bun.env.DEV_JWT_SECRET);
         
