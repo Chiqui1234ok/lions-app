@@ -6,7 +6,11 @@ import { BaseUser, FindUser } from '../interfaces/BaseUser';
 import { sign } from 'hono/jwt';
 
 class User {
-    // 1. MAIN FUNCTIONS
+    /**
+     * 
+     * @param data BaseUser
+     * @returns 
+     */
     public async registerUser(data: Omit<BaseUser, 'encryptPassword' | 'validatePassword'>) {
         // 1. Input validations
         if(data.email === undefined)
