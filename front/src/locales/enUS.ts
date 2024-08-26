@@ -1,7 +1,7 @@
-const enUs: Object = {
+const enUS = {
   emailInput: 'E-mail',
   passwordInput: 'Password',
   submitBtn: 'Submit',
 };
 
-export default enUs;
+export default enUS;

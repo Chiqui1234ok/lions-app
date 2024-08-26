@@ -1,4 +1,4 @@
-const esAR: Object = {
+const esAR = {
   readMore: "Read more",
 };
 
