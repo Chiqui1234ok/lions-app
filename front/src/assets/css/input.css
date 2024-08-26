@@ -1,0 +1,9 @@
+input {
+    padding: var(--gap-sm);
+    border-radius: var(--gap-sm);
+    /* Reset defaults */
+    outline: none;
+    border: none;
+    /*  */
+    border: 1px solid var(--gray);
+}

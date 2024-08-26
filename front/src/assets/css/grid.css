@@ -1,0 +1,35 @@
+[class*=grid] {
+    width: 100%; /* hotfix for ul/ol */
+    display: grid !important;
+}
+[class*=grid].center {
+    align-items: center;
+    text-align: center
+}
+.grid-2, .grid-3, .grid-4, .grid-6, .grid-7 {grid-template-columns: 100%}
+.gap-sm {gap: var(--gap-sm)}
+.gap {gap: var(--gap)}
+.gap-xl {gap: var(--gap-xl)}
+.gap-xxl {gap: var(--gap-xxl)}
+.gap-xxxl {gap: var(--gap-xxxl)}
+/*  */
+@media (min-width: 768px) {
+    .grid-2 {grid-template-columns: 1fr 1fr}
+    .grid-2 .span {grid-column: 1 / span 2}
+}
+@media (min-width: 1024px) {
+    .grid-3, .grid-6 {grid-template-columns: repeat(3, 1fr)}
+    .grid-4 {grid-template-columns: repeat(2, 1fr)}
+    .grid-3 .span, .grid-3 .span {grid-column: 1 / span 3}
+    .grid-4 .span {grid-column: 1 / span 2}
+    .grid-7 {grid-template-columns: repeat(4, 1fr)}
+    .grid-7 .span {grid-column: 1 / span 4}
+}
+@media (min-width: 1600px) {
+    .grid-4 {grid-template-columns: repeat(4, 1fr)}
+    .grid-4 .span {grid-column: 1 / span 4}
+    .grid-6 {grid-template-columns: repeat(6, 1fr)}
+    .grid-6 .span {grid-column: 1 / span 6}
+    .grid-7 {grid-template-columns: repeat(7, 1fr)}
+    .grid-7 .span {grid-column: 1 / span 7}
+}

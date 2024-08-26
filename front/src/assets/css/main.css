@@ -1,0 +1,110 @@
+/* Main variables */
+:root {
+    /* Colors */
+    --black: #000;
+    --black-alt: #292929;
+    --gray: #5a5a5a;
+    --red: #ee4d4d;
+    --red-alt: #f83636;
+    --skyblue: #5cb2cc;
+    --skyblue-alt: #4eb0d6;
+    --green: #4bbe4b;
+    --green-alt: #2dc935;
+    --white: #fff;
+    --white-alt: #e9e9e9;
+    /* Gap */
+    --gap-sm: 4px;
+    --gap: 8px;
+    --gap-xl: 16px;
+    --gap-xxl: 28px;
+    --gap-xxxl: 40px;
+    /* Animation timing */
+    --animation-timing-sm: .25s;
+    --animation-timing: .5s;
+    --animation-timing-xl: 1s;
+}
+
+/* Fonts */
+@font-face {
+    font-family: 'NotoSans';
+    src: url('../fonts/Noto_Sans/NotoSans-VariableFont_wdth\,wght.ttf') format('woff2-variations');
+    font-weight: 100 900; /* Define el rango de pesos disponibles */
+    font-style: normal;
+    font-display: swap;
+}
+
+/* Variants */
+.thin {
+    font-family: 'NotoSans', sans-serif;
+    font-weight: 100; /* Thin */
+    font-style: normal;
+}
+
+.normal {
+    font-family: 'NotoSans', sans-serif;
+    font-weight: 400; /* Normal */
+    font-style: normal;
+}
+
+.bold {
+    font-family: 'NotoSans', sans-serif;
+    font-weight: 700; /* Bold */
+    font-style: normal;
+}
+
+.extra-bold {
+    font-family: 'NotoSans', sans-serif;
+    font-weight: 800; /* Extra Bold */
+    font-style: normal;
+}
+/*  */
+body {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+/* Applying fonts */
+input, textarea, a, p, ul, ol, h1, h2, h3, h4, h5, h6 {
+    font-family: 'NotoSans';
+}
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 700; /* Bold */
+}
+a {
+    color: var(--skyblue);
+    text-decoration: none;
+    padding-bottom: 1px;
+    border-bottom: 1px solid var(--skyblue);
+    cursor: pointer;
+    transition: border-color,color var(--animation-timing-sm) ease-out;
+}
+    a:hover {
+        color: var(--skyblue-alt);
+        border-color: var(--skyblue-alt);
+    }
+
+/* Containers */
+.container {
+    width: calc(100% - var(--gap-xxl));
+    margin: 0 auto;
+}
+
+.container.fullscreen {
+    width: 100%;
+    min-height: 100vh;
+}
+
+@media(width >= 1280px) {
+    .container {
+        width: 70%;
+    }    
+}
+
+/* Text helpers */
+.text-center {text-align: center}
+
+/* Margin */
+.mt {margin-top: var(--gap) !important}
+.mr {margin-right: var(--gap) !important}
+.mb {margin-bottom: var(--gap) !important}
+.ml {margin-left: var(--gap) !important}
