@@ -28,7 +28,7 @@ class Validate {
      * @returns {boolean} True if the JWT is valid, otherwise false.
      */
     public async jwt(token: string) {
-        const secret = process.env.DEV_JWT_SECRET;
+        const secret = Bun.env.DEV_JWT_SECRET;
         let jwt = null;
         if(token && secret) {
             const splittedAuthorizationString = token.split('Bearer ');

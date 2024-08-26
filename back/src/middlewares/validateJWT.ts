@@ -14,7 +14,7 @@ const validateJWT = createMiddleware(async function(c, next) {
 
     if(token) {
         const splittedAuthorizationString = token.split('Bearer ');
-        jwt = await verify(splittedAuthorizationString[1], process.env.DEV_JWT_SECRET);
+        jwt = await verify(splittedAuthorizationString[1], Bun.env.DEV_JWT_SECRET);
         
         /**
          *  console.log(jwt) example 

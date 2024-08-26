@@ -46,7 +46,7 @@ class User {
     public async signUser(data: BaseUser) {
         if(data.email === undefined || data.role === undefined)
             throw new Error('Please, send a valid user data.');
-        if(process.env.DEV_JWT_SECRET === undefined)
+        if(Bun.env.DEV_JWT_SECRET === undefined)
             throw new Error('Sign service isn\'t working right now. Please, try in a few minutes.');
         
         const tokenData = {
@@ -54,7 +54,7 @@ class User {
             role: data.role,
             exp: Math.floor(Date.now() / 1000) * 60 * 300, // Token expires in 300 minutes (5 hours)
         };
-        const token = await sign(tokenData, process.env.DEV_JWT_SECRET);
+        const token = await sign(tokenData, Bun.env.DEV_JWT_SECRET);
         
         return token;
     }
