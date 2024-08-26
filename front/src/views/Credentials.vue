@@ -1,27 +1,30 @@
 <template>
     <main>
         <form class="form">
-            <input type="email" v-model="email" class="input" :placeholder="t('emailInput')">
-            <input type="password" v-model="password" class="input" :placeholder="t('passwordInput')">
+            <input type="email" v-model="user.email" class="input" :placeholder="t('emailInput')">
+            <input type="password" v-model="user.password" class="input" :placeholder="t('passwordInput')">
             <input type="submit" :value="t('submitBtn')">
         </form>
     </main>
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
-import { Options, Component } from 'vue-class-component';
+import { ref } from 'vue'
+import { useI18n } from 'vue-i18n';
+import { BaseUser } from '@/interfaces/BaseUser';
 
-@Options ({
-    props: {
-
+export default {
+  setup() {
+    const { t } = useI18n();
+    const user = ref<BaseUser>({
+        name: '',
+        email: '',
+        password: '',
+    });    
+    return {
+        t,
+        user,
     }
-})
-
-@Component
-class Credentials extends Vue {
-    t = useI18n();
+  },
 }
-
-export default Credentials;
 </script>
