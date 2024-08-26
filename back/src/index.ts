@@ -25,6 +25,6 @@ app.route('/sell', sell);
 app.route('/user', user);
 
 export default {
-  port: Bun.env.DEV_API_PORT, // same as process.env.DEV_API_PORT
+  port: Bun.env.DEV_API_PORT, // same as Bun.env.DEV_API_PORT
   fetch: app.fetch,
 }
