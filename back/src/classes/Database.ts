@@ -1,13 +1,31 @@
 import { BaseUser } from "../interfaces/BaseUser";
 import DbPreparationEditedFiles from "../interfaces/DbPreparationEditedFiles";
 import DbPreparationFiles from "../interfaces/DbPreparationFiles";
+// https://bun.sh/docs/api/file-io
 
 class Database {
-    private updateTextFile(text: string, search: string[], replace: string[]): string {
-        
-        return result;
-    }
 
+    public async connect(c: Object) {
+        const userEnvFile = Bun.file('')
+        // if()
+    }
+    /* -- */
+    /**
+     * 
+     * @param text 
+     * @param search 
+     * @param replace 
+     * @returns 
+     */
+    // private updateTextFile(text: string, search: string[], replace: string[]): string {
+        
+    //     return result;
+    // }
+
+    /**
+     * 
+     * @param user 
+     */
     public async registerDatabase(user: BaseUser) {
         // If the user exists
         if(user && user._id) {
@@ -33,8 +51,8 @@ class Database {
             }
             
             /**
-             * I'll search for string in template files and replace them for real values
-             * dockerServiceName serves as docker hostname for MongoDB
+             * I'll search for string in template files and replace them for real values.
+             * dockerServiceName: string, serves as docker hostname for MongoDB
              * Note: I'm using user's email as root user and db password
              */
             const dockerServiceName = `${user.email}_mongodb_lions_app`;
@@ -58,14 +76,18 @@ class Database {
                 dockerFile: [],
                 dockerCompose: []
             };
+
+            // Update text of each file
             while(i < templateKeys.length) {
                 const key = templateKeys[i] as keyof DbPreparationFiles;
                 editedFiles[key] = this.updateTextFile(await templateFiles.envFile.text(), search[key], replace[key]);
                 i++;
             }
 
-            
-                    
+            // Save each file
+            // route will be: @/linux/databases/${user.email}/.env
+            // route will be: @/linux/databases/${user.email}/Dockerfile
+            // route will be: @/linux/databases/${user.email}/docker-compose.yml
         }
     }
 }
