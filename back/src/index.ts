@@ -6,6 +6,7 @@ import mongodb from './config/mongodb'
 import buy from './routes/buy'
 import index from './routes/index'
 import listing from './routes/listing'
+import randomTest from './routes/randomTest'
 import sell from './routes/sell'
 import user from './routes/user'
 
@@ -21,6 +22,7 @@ app.use('/favicon.ico', serveStatic({ path: './favicon.ico' }));
 app.route('/buy', buy);
 app.route('/', index);
 app.route('/listing', listing);
+app.route('/randomTest', randomTest);
 app.route('/sell', sell);
 app.route('/user', user);
 
