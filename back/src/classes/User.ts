@@ -4,8 +4,40 @@ import BaseUserModel from '../models/BaseUser';
 import { BaseUser, FindUser } from '../interfaces/BaseUser';
 // JWT
 import { sign } from 'hono/jwt';
+import { getCookie, setCookie } from 'hono/cookie'
+import { Context } from 'hono';
+import Validate from './Validate';
 
 class User {
+    /**
+     * registerUserCookies(c, data) will save user's email in
+     * a cookie. With this cookie, back-end can select the
+     * database for this user.
+     * @param c Hono's Context (I need it for cookie creation)
+     * @param data { BaseUser }
+     * @returns true if all is ok. Otherwise will throw an error which needs to be handle by try/catch blocks
+     */
+    public registerUserCookies(c: Context, data: BaseUser): boolean {
+        if(c === undefined)
+            throw new Error('The context of the application isn\'t OK. Don\'t worry, try again.');
+        if(data === undefined || data.email === undefined)
+            throw new Error('Please, try to logout and login again.');
+
+        const   check = new Validate(),
+                validUser = check.email(data.email);
+
+        if(validUser) {
+            data.email = data.email.replace('@', '_');
+            setCookie(c, data.email, data.email);
+        }
+        const checkCookie = getCookie(c, `${data.email}`);
+        if(checkCookie === undefined)
+            throw new Error('Your data is safe, but we can\'t fetch it right now. Please, try in a minute.');
+        
+        // If we're all ok
+        return true;
+    }
+
     /**
      * 
      * @param data BaseUser
