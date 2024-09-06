@@ -1,0 +1,109 @@
+@startuml
+
+interface BaseClient {
+    - name: Name
+    - phone: Phone
+    - email: Email
+    - thumbnail: Thumbnail
+    - notes: Note[]
+    + getName()
+    + getPhone()
+    + getEmail()
+    + getThumbnail()
+    + getNotes()
+}
+
+interface BaseUser extends BaseClient {
+    - _id: ObjectId
+    - password: string
+    - role: Map<string, number>
+    + encryptPassword(password: string): Promise<string>
+    + validatePassword(password: string): Promise<string>
+    + getId()
+    + getRole()
+    + setPassword()
+    + setRole()
+}
+
+class User implements BaseUser {
+    + registerUserCookies(c: Context): boolean
+    + registerUser(): User
+    + signUser(): string
+}
+
+class Supplier implements BaseUser {
+    - description: Description
+}
+
+class Name {
+    - names: string[]
+    - alias: string
+    + getFullName(): string
+    + get(i): string
+    + getAlias(): string
+    + set(fullName): string
+    + setAlias(alias): string
+}
+
+class Phone {
+    - country: number
+    - number: number
+    - save(phone: Phone)
+    - check(phone: Phone)
+    + get()
+    + set(phone: Phone)
+}
+
+
+class Email {
+    - email
+    - save(email: Email)
+    - check(email: Email)
+    + get()
+    + set(email: Email)
+}
+
+class Description {
+    - body: string
+    - timestamp: Date
+    - save(description: Description)
+    - check(description: Description)
+    + get()
+    + set(description: Description)
+}
+
+
+class Thumbnail {
+    - url
+    - timestamp
+    - save(thumbnail: Thumbnail)
+    - check(thumbnail: Thumbnail)
+    + get()
+    + set(thumbnail: Thumbnail)
+}
+
+class Note {
+    - body
+    - timestamp
+    - save(email: Email)
+    - check(email: Email)
+    + get()
+    + set(email: Email)
+}
+
+' Composition
+BaseClient *--> Name
+BaseClient *--> Phone
+BaseClient *--> Email
+BaseClient *--> Thumbnail
+BaseClient *--> Note
+Supplier *..> Description
+
+
+' Notes
+note left of BaseUser 
+setRole() will only create a new item in
+role[], just if doesn't exist already
+endnote
+
+@enduml
