@@ -1,0 +1,34 @@
+@startuml
+
+interface BasePayment {
+    - transaction: Transaction
+    + notes: Note[]
+}
+
+class Transaction {
+    - receiver: BaseClient
+    - sender: User
+    - transactionLink: string
+    - receipt: string
+    - timestamp: Date
+    + get(): Transaction
+    + set(transaction: Transaction)
+}
+
+class Payment extends BasePayment {
+    - confirmed: boolean
+    + get(): Payment
+    + set(confirmed: boolean)
+}
+
+note top of Transaction
+Sender must be an user of the app,
+which, in theory, has the "Stripe"
+or "Mercado Pago" module activated
+endnote
+
+note top of Payment
+The payment class it's final form
+of the 
+
+@enduml
