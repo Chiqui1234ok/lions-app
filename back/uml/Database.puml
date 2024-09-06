@@ -1,0 +1,31 @@
+@startuml
+
+class User implements BaseUser {
+    + registerUserCookies(c: Context): boolean
+    + registerUser(): User
+    + signUser(): string
+}
+
+class Database {
+    + connect(c: Object)
+    + register(user: User)
+}
+
+' Use
+Database .r.> User
+
+' Notes
+note top of Database
+connect() will know when it's time
+to connect to client's database,
+thanks to some .env variables when
+user log-in
+endnote
+
+note top of Database
+register() method is for register
+databases for each user. This will
+decrease over-head when filtering
+a lot of results
+endnote
+@enduml
