@@ -23,10 +23,12 @@ router.post('/register', validateUser, async (c) => {
     try {
         // 1. Validations over user's input
         const request: BaseUser = await c.req.json();
-        request.name = !!request.name ? request.name : 'Usuario';
         // 2. Register user
         const UserInstance = new User();
-        const user = await UserInstance.registerUser(request);
+        UserInstance.email = request.email;
+        UserInstance.password = request.password;
+        UserInstance.name = !!request.name ? request.name : 'Usuario';
+        const user = await UserInstance.registerUser();
 
         if(user) {
             result.success = true;

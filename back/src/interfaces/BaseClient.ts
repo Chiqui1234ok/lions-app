@@ -6,7 +6,7 @@ interface BaseClient extends Document {
     name: string; // Defaults to 'User' / 'Usuario'
     phone?: string;
     email?: string;
-    thumbnail?: Buffer;
+    thumbnail?: string;
     note?: Note[];
 }
 

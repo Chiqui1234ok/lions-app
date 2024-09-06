@@ -16,9 +16,20 @@ class Validate {
      * @param {string} email
      * @returns {boolean} True if string contains '@' and '.<something>'.
     */
-    email(email: string): boolean {
+    public email(email: string): boolean {
         const regex = /^[^@]+@[^@]+\.[^@]+$/;
         return regex.test(email);
+    }
+
+    /**
+     * 
+     * @param email 
+     * @returns { string } same email but with '@' removed
+     */
+    public friendlyEmail(email: string): string {
+        if(email === undefined)
+            throw new Error('There\'s no valid email to "friendlify"');
+        return email.replace('@', '_');
     }
 
     /**
