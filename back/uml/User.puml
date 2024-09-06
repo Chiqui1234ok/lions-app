@@ -1,28 +1,19 @@
 @startuml
 
 interface BaseClient {
-    - name: Name
-    - phone: Phone
-    - email: Email
-    - thumbnail: Thumbnail
-    - notes: Note[]
-    + getName()
-    + getPhone()
-    + getEmail()
-    + getThumbnail()
-    + getNotes()
+    - _id: ObjectId
+    + name: Name
+    + phone: Phone
+    + email: Email
+    + thumbnail: Thumbnail
+    + notes: Note[]
+    + getId()
+    + setId()
 }
 
 interface BaseUser extends BaseClient {
-    - _id: ObjectId
-    - password: string
-    - role: Map<string, number>
-    + encryptPassword(password: string): Promise<string>
-    + validatePassword(password: string): Promise<string>
-    + getId()
-    + getRole()
-    + setPassword()
-    + setRole()
+    + password: Password
+    + role: Role
 }
 
 class User implements BaseUser {
@@ -32,28 +23,44 @@ class User implements BaseUser {
 }
 
 class Supplier implements BaseUser {
-    - description: Description
+    + link: Link
+    + description: Description
+}
+
+' :: TINY OBJECTS ::
+
+class Password {
+    - password: string
+    - encrypt(password: string): Promise<string>
+    + set(password: string)
+    + validate(password: string): Promise<string>
+}
+
+class Role {
+    - role: Map<string, number>
+    + set(role: Map<string, number>)
+    + get()
+    + getOne(name)
 }
 
 class Name {
     - names: string[]
     - alias: string
-    + getFullName(): string
-    + get(i): string
+    + get(): string
+    + getOne(i): string
     + getAlias(): string
     + set(fullName): string
     + setAlias(alias): string
 }
 
 class Phone {
-    - country: number
-    - number: number
+    - country: string
+    - number: string
     - save(phone: Phone)
     - check(phone: Phone)
     + get()
     + set(phone: Phone)
 }
-
 
 class Email {
     - email
@@ -72,10 +79,9 @@ class Description {
     + set(description: Description)
 }
 
-
 class Thumbnail {
-    - url
-    - timestamp
+    - link: string
+    - timestamp: Date
     - save(thumbnail: Thumbnail)
     - check(thumbnail: Thumbnail)
     + get()
@@ -83,12 +89,19 @@ class Thumbnail {
 }
 
 class Note {
-    - body
-    - timestamp
+    - tags: string
+    - body: string
+    - timestamp: Date
     - save(email: Email)
     - check(email: Email)
     + get()
     + set(email: Email)
+}
+
+class Link {
+    - link
+    + get()
+    + set(link: string)
 }
 
 ' Composition
@@ -97,8 +110,10 @@ BaseClient *--> Phone
 BaseClient *--> Email
 BaseClient *--> Thumbnail
 BaseClient *--> Note
+Supplier *..> Link
 Supplier *..> Description
-
+BaseUser *--> Password
+BaseUser *--> Role
 
 ' Notes
 note left of BaseUser 
