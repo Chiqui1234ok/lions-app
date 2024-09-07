@@ -6,7 +6,7 @@ interface BaseSales {
     + payment: Payment
 }
 
-class Sales {
+class Sale {
 
 }
 
