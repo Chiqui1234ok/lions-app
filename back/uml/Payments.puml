@@ -1,7 +1,8 @@
 @startuml
 
 interface BasePayment {
-    - transaction: Transaction
+    + transaction: Transaction
+    + amount: Value
     + notes: Note[]
 }
 

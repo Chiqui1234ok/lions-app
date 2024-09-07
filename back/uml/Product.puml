@@ -1,12 +1,12 @@
 @startuml
 
 interface BaseProduct {
-    - name: Name
-    - body: Description
-    - specifications: Features
-    - value: Value
-    - category: Category[]
-    - photos: Thumbnail[]
+    + name: Name
+    + body: Description
+    + specifications: Features
+    + value: Value
+    + category: Category[]
+    + photos: Thumbnail[]
 }
 
 class Name {
