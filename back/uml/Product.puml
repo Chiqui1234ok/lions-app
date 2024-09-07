@@ -1,0 +1,62 @@
+@startuml
+
+interface BaseProduct {
+    - name: Name
+    - body: Description
+    - specifications: Features
+    - value: Value
+    - category: Category[]
+    - photos: Thumbnail[]
+}
+
+class Name {
+    - names: string[]
+    - alias: string
+    + get(): string
+    + getOne(i): string
+    + getAlias(): string
+    + set(fullName): string
+    + setAlias(alias): string
+}
+
+class Description {
+    - body: string
+    - timestamp: Date
+    - save(description: Description)
+    - check(description: Description)
+    + get()
+    + set(description: Description)
+}
+
+class Features {
+    - key: string
+    - value: string
+    + get()
+    + getOne(query: string)
+    + set(key, value)
+}
+
+class Value {
+    - amount: number
+    - symbol: string
+    + get()
+    + getOne(symbol: string)
+    + set(amount, symbol)
+}
+
+class Category {
+    - name: string
+    + get()
+    + set(name)
+}
+
+' Composition
+BaseProduct *--> Name
+BaseProduct *--> Description
+BaseProduct *--> Features
+BaseProduct *--> Value
+BaseProduct *--> Category
+
+' Notes
+
+@enduml
