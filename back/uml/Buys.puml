@@ -1,0 +1,21 @@
+@startuml
+
+interface BaseBuys {
+    + seller: Supplier
+    + buyer: User
+    + payment: Payment
+}
+
+class Buy {
+
+}
+
+' Inheritance
+BaseBuys <|.r. Buy
+
+' Composition
+BaseBuys *--> User
+BaseBuys *--> Client
+BaseBuys *--> Payment
+
+@enduml
