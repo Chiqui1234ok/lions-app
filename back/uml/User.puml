@@ -22,7 +22,7 @@ class User implements BaseUser {
     + signUser(): string
 }
 
-class Supplier implements BaseUser {
+class BaseSupplier implements BaseClient {
     + link: Link
     + description: Description
 }
@@ -110,8 +110,8 @@ BaseClient *--> Phone
 BaseClient *--> Email
 BaseClient *--> Thumbnail
 BaseClient *--> Note
-Supplier *..> Link
-Supplier *..> Description
+BaseSupplier *..> Link
+BaseSupplier *..> Description
 BaseUser *--> Password
 BaseUser *--> Role
 
