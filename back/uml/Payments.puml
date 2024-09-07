@@ -28,7 +28,8 @@ or "Mercado Pago" module activated
 endnote
 
 note top of Payment
-The payment class it's final form
-of the 
+The payment class represents the
+final form of a payment
+endnote
 
 @enduml
