@@ -1,0 +1,21 @@
+@startuml
+
+interface BaseSales {
+    + seller: User
+    + buyer: Client
+    + payment: Payment
+}
+
+class Sales {
+
+}
+
+' Inheritance
+BaseSales <|.r. Sales
+
+' Composition
+BaseSales *--> User
+BaseSales *--> Client
+BaseSales *--> Payment
+
+@enduml
