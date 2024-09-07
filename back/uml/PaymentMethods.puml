@@ -1,0 +1,13 @@
+@startuml
+
+interface BasePaymentMethods {
+    + name: Name
+}
+
+class PaymentMethod {
+
+}
+
+' Inheritance (interface)
+
+BasePaymentMethods <|.. PaymentMethod
