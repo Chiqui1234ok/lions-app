@@ -1,0 +1,45 @@
+@startuml
+
+title Belongs to MongoDB User model
+
+' class DeliveryUser extends User
+class DeliveryUser {
+    + travels: Travel[]
+}
+
+' :: TINY OBJECTS ::
+
+class Travel {
+    + stops: TravelStops
+    + timestamps: Date
+}
+
+class TravelStops {
+    - addresses: Address[]
+    + get(): Address
+    + getOne(i): Address
+    + getLength(): number
+    + set(data: Address): Address
+    + add(data: Address, i): Address
+}
+
+class Address {
+    - street: string
+    - city: string
+    - postalCode: string
+    - floor: string
+    - suite: string
+    + get(): Address
+    + set(address): Address
+}
+
+' Inherit (classes)
+User <|-- DeliveryUser
+
+' Composition
+
+DeliveryUser *--> Travel
+Travel *-r-> TravelStops
+TravelStops *-r-> Address
+
+@enduml
