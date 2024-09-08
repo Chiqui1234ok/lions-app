@@ -25,6 +25,7 @@ class Client {
 ' class User implements BaseUser
 class User {
     + registerUserCookies(c: Context): boolean
+    + save(this): User
     + registerUser(): User
     + signUser(): string
 }
@@ -46,9 +47,10 @@ class Password {
 
 class Role {
     - role: Map<string, number>
-    + set(role: Map<string, number>)
     + get()
     + getOne(name)
+    + set(role: Map<string, number>)
+    + add(role: Map<string, number>)
 }
 
 class Name {
@@ -58,22 +60,21 @@ class Name {
     + getOne(i): string
     + getAlias(): string
     + set(fullName): string
+    + add(name): string
     + setAlias(alias): string
 }
 
 class Phone {
     - country: string
     - number: string
-    - save(phone: Phone)
-    - check(phone: Phone)
+    - validate(phone: Phone): boolean
     + get()
     + set(phone: Phone)
 }
 
 class Email {
     - email
-    - save(email: Email)
-    - check(email: Email)
+    - validate(email: Email)
     + get()
     + set(email: Email)
 }
@@ -81,8 +82,7 @@ class Email {
 class Description {
     - body: string
     - timestamp: Date
-    - save(description: Description)
-    - check(description: Description)
+    - validate(description: Description): boolean
     + get()
     + set(description: Description)
 }
@@ -90,8 +90,7 @@ class Description {
 class Thumbnail {
     - link: string
     - timestamp: Date
-    - save(thumbnail: Thumbnail)
-    - check(thumbnail: Thumbnail)
+    - validate(thumbnail: Thumbnail): boolean
     + get()
     + set(thumbnail: Thumbnail)
 }
@@ -100,14 +99,14 @@ class Note {
     - tags: string
     - body: string
     - timestamp: Date
-    - save(email: Email)
-    - check(email: Email)
+    - validate(email: Email)
     + get()
     + set(email: Email)
 }
 
 class Link {
     - link
+    - validate(link: string): boolean
     + get()
     + set(link: string)
 }
