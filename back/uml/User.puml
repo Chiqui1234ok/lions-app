@@ -1,14 +1,19 @@
 @startuml
 
+title MongoDB User Model
+
 interface BaseClient {
     - _id: ObjectId
+    - type: string
     + name: Name
     + phone: Phone
     + email: Email
     + thumbnail: Thumbnail
     + notes: Note[]
     + getId()
+    + getType()
     + setId()
+    + setType(type: string)
 }
 
 ' interface BaseUser extends BaseClient
@@ -32,7 +37,7 @@ class User {
 
 ' class Supplier implements BaseClient
 class Supplier {
-    + link: Link
+    + webpage: Link
     + description: Description
 }
 
@@ -130,9 +135,10 @@ BaseUser *--> Password
 BaseUser *--> Role
 
 ' Notes
-note top of BaseUser 
-setRole() will only create a new item in
-role[], just if doesn't exist already
+note top of BaseClient
+"type" property will set if the document
+is representing a User, Client, Supplier,
+DeliveryUser, etc.
 endnote
 
 @enduml
