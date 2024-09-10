@@ -16,20 +16,9 @@ class Validate {
      * @param {string} email
      * @returns {boolean} True if string contains '@' and '.<something>'.
     */
-    public email(email: string): boolean {
+    public static email(email: string): boolean {
         const regex = /^[^@]+@[^@]+\.[^@]+$/;
         return regex.test(email);
-    }
-
-    /**
-     * 
-     * @param email 
-     * @returns { string } same email but with '@' removed
-     */
-    public friendlyEmail(email: string): string {
-        if(email === undefined)
-            throw new Error('There\'s no valid email to "friendlify"');
-        return email.replace('@', '_');
     }
 
     /**
@@ -38,7 +27,7 @@ class Validate {
      * @param {string} token - The JSON Web Token to validate.
      * @returns {boolean} True if the JWT is valid, otherwise false.
      */
-    public async jwt(token: string) {
+    public static async jwt(token: string) {
         const secret = Bun.env.DEV_JWT_SECRET;
         let jwt = null;
         if(token && secret) {

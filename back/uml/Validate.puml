@@ -1,9 +1,8 @@
 @startuml
 
 class Validate {
-    + email(email: string): string
-    + friendlyEmail(email: string): string
-    + jwt(token: string)
+    + static email(email: string): string
+    + static jwt(token: string)
 }
 
 @enduml
