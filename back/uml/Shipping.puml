@@ -1,0 +1,20 @@
+@startuml
+
+title MongoDB Shipping Model
+
+interface BaseShipping {
+    - receiver: ObjectId
+    - senderUser: ObjectId
+    - deliveryUser: ObjectId
+    - travelOfDeliveryUser: ObjectId
+}
+
+' class Shipping implements BaseShipping
+class Shipping {
+
+}
+
+' Inherits (interface)
+BaseShipping <|.. Shipping
+
+@enduml
