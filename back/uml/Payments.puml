@@ -1,7 +1,10 @@
 @startuml
 
+title MongoDB Payments Model
+
 interface BasePayment {
-    + transaction: Transaction
+    + transactionId: ObjectId
+    + orderId: ObjectId
     + amount: Value
     + notes: Note[]
 }
@@ -22,6 +25,14 @@ class Payment extends BasePayment {
     + set(confirmed: boolean)
 }
 
+' Inherit (interfaces)
+BasePayment <|.. Payment
+
+' Composition
+BasePayment *--> Transaction
+BasePayment *--> Value
+
+' Notes
 note top of Transaction
 Sender must be an user of the app,
 which, in theory, has the "Stripe"
