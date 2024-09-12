@@ -1,0 +1,21 @@
+@startuml
+
+title MongoDB Email Model
+
+interface BaseEmails {
+    + sender: User
+    + receiver: Client
+    + body: EmailBody
+    - timestamp: Date
+    + send()
+    + get()
+    + set(email: BaseEmails)
+}
+
+class Email {
+
+}
+
+BaseEmails <|-- Email
+
+@enduml
