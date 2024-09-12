@@ -1,5 +1,7 @@
 @startuml
 
+title MongoDB Product Model
+
 interface BaseProduct {
     + name: Name
     + body: Description
