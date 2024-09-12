@@ -1,7 +1,13 @@
 @startuml
 
+title MongoDB PaymentMethods Model
+
 interface BasePaymentMethods {
     + name: Name
+    + accountOwners: User[]
+    + accountNumber: string
+    + get()
+    + set(data: BasePaymentMethods)
 }
 
 class PaymentMethod {
