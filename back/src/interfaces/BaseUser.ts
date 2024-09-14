@@ -2,7 +2,7 @@ import BaseClient from "./BaseClient";
 
 interface BaseUser extends BaseClient {
     password: string;
-    role?: Map<string, number>;
+    roles?: Map<string, number>;
     encryptPassword(password: string): Promise<string>;
     validatePassword(password: string): Promise<boolean>;
 }
