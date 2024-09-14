@@ -2,6 +2,7 @@
 
 class Validate {
     + static email(email: string): string
+    + static password(password: string): string
     + static jwt(token: string)
 }
 

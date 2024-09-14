@@ -12,14 +12,14 @@ interface BaseClient {
     + notes: Note[]
     + getId()
     + getType()
-    + setId()
+    + setId(id: string)
     + setType(type: string)
 }
 
 ' interface BaseUser extends BaseClient
 interface BaseUser {
     + password: Password
-    + role: Role
+    + roles: Role[]
 }
 
 ' class Client implements BaseClient
@@ -29,10 +29,10 @@ class Client {
 
 ' class User implements BaseUser
 class User {
-    + registerUserCookies(c: Context): boolean
-    + save(this): User
-    + registerUser(): User
-    + signUser(): string
+    - setCookies(c: Context): boolean
+    + update(): User
+    + register(): User
+    + sign(): string
 }
 
 ' class Supplier implements BaseClient
@@ -52,7 +52,6 @@ class Password {
 
 class Role {
     - role: Map<string, number>
-    + get()
     + getOne(name)
     + set(role: Map<string, number>)
     + add(role: Map<string, number>)
