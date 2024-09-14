@@ -13,6 +13,7 @@ class User implements BaseUser {
     
     constructor(
         private _id?: string,
+        private type: string,
         private name?: string,
         private phone?: string,
         private email?: string,
@@ -23,13 +24,13 @@ class User implements BaseUser {
     ) {}
 
     /**
-     * registerUserCookies(c) will save user's email in
+     * setCookies(c) will save user's email in
      * a cookie. With this cookie, back-end can select the
      * database for this user.
      * @param c Hono's Context (I need it for cookie creation)
      * @returns true if all is ok. Otherwise will throw an error which needs to be handle by try/catch blocks
      */
-    public registerUserCookies(c: Context): boolean {
+    public setCookies(c: Context): boolean {
         if(c === undefined)
             throw new Error('The context of the application isn\'t OK. Don\'t worry, try again.');
         if(this.email === undefined)
@@ -55,25 +56,26 @@ class User implements BaseUser {
      * @param data BaseUser
      * @returns 
      */
-    public async registerUser() {
+    public async register() {
         // 1. Input validations
-        if(this.email === undefined)
-            throw new Error('Your email must be defined.');
-        if(this.password === undefined)
-            throw new Error('Write a password for your account.');
+        if(this.email === undefined || this.password === undefined)
+            throw new Error('Write both email and password.');
+        const   validEmail = Validate.email(this.email),
+                validPassword = Validate.password(this.password);
+        if(!validEmail) throw new Error('Correct your email in order to login.');
+        if(!validPassword) throw new Error('Please, your password must have 8 characters or more.').
 
         // 2. Check user's email is available
         const queryParams: FindUser = {field: 'email', query: this.email};
         let mongoUser = await this.findUser(queryParams);
-        if(mongoUser)
-            throw new Error(`This user already exists, you forgot the password?`);
+        if(mongoUser) throw new Error(`This user already exists, you forgot the password?`);
 
         // 3. Register new user
-        mongoUser =  new BaseUserModel({
-                    email: this.email,
-                    password: '',
-                    name: 'Usuario',
-                });
+        mongoUser = new BaseUserModel({
+                        email: this.email,
+                        password: '',
+                        name: 'Usuario',
+                    });
         mongoUser.password = await mongoUser.encryptPassword(this.password);
 
         // 3.1 Set default roles
@@ -89,6 +91,12 @@ class User implements BaseUser {
             throw new Error('Could\'t save the user due database error. Retry in a few minutes.');
 
         return mongoUser;
+    }
+
+    public save(this: User): User {
+        const user: User;
+
+        return user;
     }
 
     public async signUser() {
