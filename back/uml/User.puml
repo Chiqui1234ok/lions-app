@@ -53,8 +53,7 @@ class Password {
 class Role {
     - role: Map<string, number>
     + getOne(name)
-    + set(role: Map<string, number>)
-    + add(role: Map<string, number>)
+    + setOne(role: Map<string, number>)
 }
 
 class Name {
@@ -62,6 +61,7 @@ class Name {
     - alias: string
     + get(): string
     + getOne(i): string
+    + findOne(query): string
     + getAlias(): string
     + set(fullName): string
     + add(name): string
@@ -71,9 +71,8 @@ class Name {
 class Phone {
     - country: string
     - number: string
-    - validate(phone: Phone): boolean
     + get()
-    + set(phone: Phone)
+    + set(country: string, number: string)
 }
 
 class Email {
