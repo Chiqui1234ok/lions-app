@@ -17,8 +17,18 @@ class Validate {
      * @returns {boolean} True if string contains '@' and '.<something>'.
     */
     public static email(email: string): boolean {
-        const regex = /^[^@]+@[^@]+\.[^@]+$/;
-        return regex.test(email);
+        const   regex = /^[^@]+@[^@]+\.[^@]+$/,
+                result: boolean = regex.test(email);
+        if(!result)
+            throw new Error('This email is invalid.');
+        return result;
+    }
+
+    public static password(password: string): boolean {
+        const result: boolean = password.length >= 8;
+        if(!result)
+            throw new Error('Password must have 8 characters or more.');
+        return result;
     }
 
     /**
@@ -35,8 +45,8 @@ class Validate {
             jwt = await verify(splittedAuthorizationString[1], secret);
             return jwt;
         }
-        console.error(`jwt: ${jwt}`);
-        return jwt;
+        // else
+        throw new Error('This token is invalid, try to remove your cookies and login again.');
     }
 }
 
