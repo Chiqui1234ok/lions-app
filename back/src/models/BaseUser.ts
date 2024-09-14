@@ -4,13 +4,14 @@ import { NoteSchema } from './Note';
 
 const BaseUserSchema = new Schema<BaseUser>(
     {
+        type: { type: String },
         name: { type: String },
         phone: { type: String },
         email: { type: String },
         password: { type: String },
         thumbnail: { type: Buffer },
-        note: [NoteSchema],
-        role: { type: Map, of: Number },
+        notes: [NoteSchema],
+        roles: { type: Map, of: Number },
     },
     {
         timestamps: true
