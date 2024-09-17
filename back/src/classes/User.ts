@@ -10,19 +10,22 @@ import Validate from './Validate';
 import Note from '../interfaces/Note';
 import Email from './tinyTypes/Email';
 import Password from './tinyTypes/Password';
+import { Name } from './tinyTypes/Name';
+import Phone from './tinyTypes/Phone';
+import { Role } from './tinyTypes/Role';
 
 class User implements BaseUser {
     
     constructor(
         private _id?: string,
         private type: string,
-        private name?: string,
-        private phone?: string,
-        private email?: string,
+        private name?: Name,
+        private phone?: Phone,
+        private email?: Email,
         private thumbnail?: string,
         private note?: Note[],
         private password?: Password,
-        private role?: Map<string, number>
+        private role?: Role
     ) {}
 
     /**
