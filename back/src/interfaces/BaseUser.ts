@@ -1,10 +1,9 @@
+import Password from "../classes/tinyTypes/Password";
 import BaseClient from "./BaseClient";
 
 interface BaseUser extends BaseClient {
-    password: string;
+    password: Password;
     roles?: Map<string, number>;
-    encryptPassword(password: string): Promise<string>;
-    validatePassword(password: string): Promise<boolean>;
 }
 
 interface FindUser {
