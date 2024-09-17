@@ -45,9 +45,10 @@ class Supplier {
 
 class Password {
     - password: string
-    - encrypt(password: string): Promise<string>
+    + validLength(password: string): boolean
+    + encrypt(password: string): Promise<string>
     + set(password: string)
-    + validate(password: string): Promise<string>
+    + validate(userInput: string): Boolean
 }
 
 class Role {
@@ -77,9 +78,9 @@ class Phone {
 
 class Email {
     - email
-    - validate(email: Email)
+    - validate(email: string)
     + get()
-    + set(email: Email)
+    + set(email: string)
 }
 
 class Description {
