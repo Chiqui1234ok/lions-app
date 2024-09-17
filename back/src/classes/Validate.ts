@@ -10,26 +10,6 @@ import { verify } from 'hono/jwt'
  * @typedef {Validate}
  */
 class Validate {
-    /**
-     * Validates any string checking if it's an email
-     * 
-     * @param {string} email
-     * @returns {boolean} True if string contains '@' and '.<something>'.
-    */
-    public static email(email: string): boolean {
-        const   regex = /^[^@]+@[^@]+\.[^@]+$/,
-                result: boolean = regex.test(email);
-        if(!result)
-            throw new Error('This email is invalid.');
-        return result;
-    }
-
-    public static password(password: string): boolean {
-        const result: boolean = password.length >= 8;
-        if(!result)
-            throw new Error('Password must have 8 characters or more.');
-        return result;
-    }
 
     /**
      * Validates a JSON Web Token (JWT).
