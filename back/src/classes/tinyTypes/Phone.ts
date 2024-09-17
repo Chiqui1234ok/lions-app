@@ -23,3 +23,5 @@ class Phone {
 
     // Helpers
 }
+
+export default Phone

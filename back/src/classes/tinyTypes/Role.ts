@@ -4,12 +4,12 @@ class Role {
     }
 
     // Getter
-    getOne(query: string): number {
+    public getOne(query: string): number {
         return this.role.get(query) ?? 0;
     }
 
     // Setter
-    set(data: RoleQuery): boolean {
+    public setOne(data: RoleQuery): boolean {
         if(data.key === undefined) throw new Error('Can\'t set a role without a key');
         if(data.value === undefined || isNaN(data.value)) throw new Error('Can\'t set a role without a numeric value');
 
@@ -22,3 +22,5 @@ interface RoleQuery {
     key: string,
     value: number
 };
+
+export { Role, RoleQuery };
