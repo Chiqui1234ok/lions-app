@@ -8,6 +8,8 @@ import { getCookie, setCookie } from 'hono/cookie'
 import { Context } from 'hono';
 import Validate from './Validate';
 import Note from '../interfaces/Note';
+import Email from './tinyTypes/Email';
+import Password from './tinyTypes/Password';
 
 class User implements BaseUser {
     
@@ -19,7 +21,7 @@ class User implements BaseUser {
         private email?: string,
         private thumbnail?: string,
         private note?: Note[],
-        private password?: string,
+        private password?: Password,
         private role?: Map<string, number>
     ) {}
 
@@ -60,14 +62,14 @@ class User implements BaseUser {
         // 1. Input validations
         if(this.email === undefined || this.password === undefined)
             throw new Error('Write both email and password.');
-        const   validEmail = Validate.email(this.email),
-                validPassword = Validate.password(this.password);
+        const   validEmail = Email.validate(this.email),
+                validPassword = Password.validate(this.password);
         if(!validEmail) throw new Error('Correct your email in order to login.');
         if(!validPassword) throw new Error('Please, your password must have 8 characters or more.').
 
         // 2. Check user's email is available
         const queryParams: FindUser = {field: 'email', query: this.email};
-        let mongoUser = await this.findUser(queryParams);
+        let mongoUser = await User.find(queryParams);
         if(mongoUser) throw new Error(`This user already exists, you forgot the password?`);
 
         // 3. Register new user
@@ -93,11 +95,11 @@ class User implements BaseUser {
         return mongoUser;
     }
 
-    public save(this: User): User {
-        const user: User;
+    // public save(this: User): User {
+    //     const user: User;
 
-        return user;
-    }
+    //     return user;
+    // }
 
     public async signUser() {
         if(this.email === undefined)
@@ -120,19 +122,13 @@ class User implements BaseUser {
     }
 
     // 2. HELPERS
-    public async findUser(query: FindUser) {
+    public static async find(query: FindUser) {
         if(!query || query.field === undefined || query.query === undefined)
             throw new Error('Field or query not specified.');
         
         const queryParams = { [query.field]: query.query };
         const user = await BaseUserModel.findOne(queryParams);
         return user;
-    }
-
-    public async validatePassword(data: BaseUser) {
-        if(data.password === undefined)
-            throw new Error('The password is empty');
-        return await data.validatePassword(data.password);
     }
 }
 
