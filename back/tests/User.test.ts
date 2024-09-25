@@ -1,4 +1,4 @@
-import User from "../src/classes/User";
+import User from "../src/classes/User/User";
 import { Context } from "hono";
 import { mock } from 'jest-mock-extended'
 import { BaseUser } from "../src/interfaces/BaseUser";
