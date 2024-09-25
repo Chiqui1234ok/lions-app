@@ -1,41 +1,31 @@
-@startuml
+@startuml User
 
 title MongoDB User Model
 
-interface BaseClient {
-    - _id: ObjectId
-    - type: string
-    + name: Name
-    + phone: Phone
-    + email: Email
-    + thumbnail: Thumbnail
-    + notes: Note[]
-    + getId()
-    + getType()
-    + setId(id: string)
-    + setType(type: string)
+class Person {
+    # name: Name
+    # phone: Phone
+    # email: Email
+    # thumbnail: string
+    # userNotes: Note[]
+    # admNotes: Note[]
 }
 
-' interface BaseUser extends BaseClient
-interface BaseUser {
-    + password: Password
-    + roles: Role[]
-}
-
-' class Client implements BaseClient
 class Client {
-
+    # password: Password
+    # roles
 }
 
-' class User implements BaseUser
+' class User implements Client
 class User {
-    - setCookies(c: Context): boolean
-    + update(): User
-    + register(): User
-    + sign(): string
+    # jwt
+    + setCookies(c: Context): void
+    + register(): Promise<User>
+    + loginJWT(): Promise<string>
+    + validateJWT(token: string): Promise<boolean>
 }
 
-' class Supplier implements BaseClient
+' class Supplier implements Client
 class Supplier {
     + webpage: Link
     + description: Description
@@ -78,9 +68,17 @@ class Phone {
 
 class Email {
     - email
-    - validate(email: string)
+    + validate(email: string)
     + get()
     + set(email: string)
+}
+
+class Password {
+    - password
+    + validLength(password: string): boolean
+    + encrypt(password: string): Promise<string>
+    + validate(userInput: string): Promise<boolean>
+    + set(newPassword: string): void
 }
 
 class Description {
@@ -100,7 +98,7 @@ class Thumbnail {
 }
 
 class Note {
-    - tags: string
+    - tags: string[]
     - body: string
     - timestamp: Date
     - validate(email: Email)
@@ -115,29 +113,27 @@ class Link {
     + set(link: string)
 }
 
-' Inherit (interfaces). For classes,
-' remember: ClasePadre <|-- ClaseHija
-BaseClient <|.r. BaseUser
-BaseUser <|.. User
-BaseClient <|.l. Supplier
-BaseClient <|.l. Client
+' Inherit (interfaces). Person <|.r. Client
+' For classes, remember:
+' ClasePadre <|-- ClaseHija
+Client <|-- User
+Person <|-- Client
+User <|-- Supplier
 
 ' Composition
-BaseClient *--> Name
-BaseClient *--> Phone
-BaseClient *--> Email
-BaseClient *--> Thumbnail
-BaseClient *--> Note
+Person *--> Name
+Person *--> Phone
+Person *--> Email
+Person *--> Thumbnail
+Person *--> Note
+Client *--> Password
+Client *--> Role
 Supplier *..> Link
 Supplier *..> Description
-BaseUser *--> Password
-BaseUser *--> Role
 
 ' Notes
-note top of BaseClient
-"type" property will set if the document
-is representing a User, Client, Supplier,
-DeliveryUser, etc.
+note top of Client
+test
 endnote
 
 @enduml
