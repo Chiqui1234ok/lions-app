@@ -18,9 +18,8 @@ class Password {
     }
 
     // Setters
-    public async set(newPassword: string): Promise<boolean> {
+    public async set(newPassword: string): void {
         this.password = await Password.encrypt(newPassword);
-        return true;
     }
 }
 
