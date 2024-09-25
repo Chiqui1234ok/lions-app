@@ -14,35 +14,17 @@ class Name {
         return fullName;
     }
 
-    public findOne(query: typesOfNames) {
-        return this.names[query];
-    }
-
-    public getOne(i: number) {
-        if(i > this.names.length - 1)
-            throw new Error('This index don\'t exists.');
-        return this.names[i];
-    }
-
-    public getAlias(): string {
-        return this.alias;
-    }
-
     // Setters
-    public set(data: string[]): string[] {
+    public set(data: string[]): void {
         this.names = data;
-        return this.names;
     }
 
-    public add(data: string): string {
-        const i = this.names.length;
+    public add(data: string): void {
         this.names.push(data);
-        return this.names[i];
     }
 
-    public setAlias(alias: string): string {
+    public setAlias(alias: string): void {
         this.alias = alias;
-        return this.alias;
     }
 }
 
