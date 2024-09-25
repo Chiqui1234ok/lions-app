@@ -1,6 +1,6 @@
 import { Hono } from 'hono'
 // Classes
-import User from '../classes/User';
+import User from '../classes/User/User';
 // Middleware
 import validateUser from '../middlewares/validateUser';
 // Interfaces
