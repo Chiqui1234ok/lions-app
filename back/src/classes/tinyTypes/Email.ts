@@ -15,6 +15,10 @@ class Email {
         return  result;
     }
 
+    public static toUnderscore(email: string): string {
+        return email.replace(/[^a-zA-Z0-9]/g, '_');
+    }
+
     // Getters
     public get(): string {
         return this.email;
