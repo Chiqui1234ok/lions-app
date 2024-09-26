@@ -20,8 +20,8 @@ class Email {
     }
 
     // Getters
-    public get(): string {
-        return this.email;
+    public get(): Email {
+        return this;
     }
 
     // Setters
@@ -29,8 +29,7 @@ class Email {
         const validEmail = Email.validate(email);
         if(validEmail)
             this.email = email;
-        else
-            throw new Error('This email is invalid, please, review it.');
+        else throw new Error('This email is invalid, please, review it.');
     }
 }
 
