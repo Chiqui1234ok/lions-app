@@ -1,4 +1,7 @@
+// MongoDB
 import { Schema, model } from 'mongoose';
+import { prop, getModelForClass } from '@typegoose/typegoose'
+//
 import User from '../classes/User/User';
 import Note from '../classes/tinyTypes/Note';
 import { Role } from '../classes/tinyTypes/Role';
@@ -7,14 +10,31 @@ import Phone from '../classes/tinyTypes/Phone';
 
 const schema = new Schema<User>(
     {
-        name: { type: Name },
-        phone: { type: Phone },
-        email: { type: String },
-        password: { type: String },
-        thumbnail: { type: String },
-        userNotes: [ {type: Note} ],
-        admNotes: [ {type: Note} ],
-        roles: [ {type: Role} ],
+        name: { 
+            type: Name
+        },
+        phone: { 
+            type: Phone
+        },
+        email: { 
+            type: String
+        },
+        password: { 
+            type: String
+        },
+        thumbnail: { 
+            type: String
+        },
+        userNotes: [{
+            type: Note
+
+        }],
+        admNotes: [{
+            type: Note
+        }],
+        roles: [{
+            type: Role
+        }],
     },
     {
         timestamps: true
