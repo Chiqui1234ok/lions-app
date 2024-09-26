@@ -7,8 +7,8 @@ class Phone {
     }
 
     // Getters
-    public get(): string {
-        return `${this.country} ${this.number}`;
+    public get(): Phone {
+        return this;
     }
 
     // Setters
