@@ -1,9 +1,13 @@
-class Role {
+class Roles {
     constructor(private role: Map<string, number> = new Map()) {
         this.role.set('profile', 1);
     }
 
     // Getter
+    public get(): Roles {
+        return this;
+    }
+
     public getOne(query: string): number {
         return this.role.get(query) ?? 0;
     }
@@ -23,4 +27,4 @@ interface RoleQuery {
     value: number
 };
 
-export { Role, RoleQuery };
+export { Roles, RoleQuery };
