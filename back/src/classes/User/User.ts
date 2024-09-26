@@ -29,15 +29,16 @@ interface FindUser {
 class User extends Client {
 
     constructor(
-        protected name: Name,
-        protected phone: Phone,
-        protected email: Email,
-        protected password: Password,
-        protected thumbnail: string,
-        protected userNotes: Note[],
-        protected admNotes: Note[],
-        protected roles: Role[],
-        protected jwt: string
+        // this is BS, returning to Advanced Schemas (mongoose 8.6.2)
+        @prop() protected name: Name,
+        @prop() protected phone: Phone,
+        @prop() protected email: Email,
+        @prop() protected password: Password,
+        @prop() protected thumbnail: string,
+        @prop() protected userNotes: Note[],
+        @prop() protected admNotes: Note[],
+        @prop() protected roles: Role[],
+        @prop() protected jwt: string
     ) {
         // Set properties in base class
         super(name, phone, email, password, thumbnail, userNotes, admNotes, roles);
