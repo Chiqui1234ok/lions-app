@@ -10,10 +10,16 @@ class Note {
     }
 
     // Setters
-    //
+    public set(tags: string[], body: string) {
+        this.tags = tags;
+        this.body = body;
+        this.timestamp = new Date();
+    }
 
     // Getters
-    //
+    public get(): Note {
+        return this;
+    }
 }
 
 export default Note;
