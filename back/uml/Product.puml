@@ -2,7 +2,7 @@
 
 title MongoDB Product Model
 
-interface BaseProduct {
+interface Product {
     + name: Name
     + body: Description
     + specifications: Features
@@ -53,11 +53,11 @@ class Category {
 }
 
 ' Composition
-BaseProduct *--> Name
-BaseProduct *--> Description
-BaseProduct *--> Features
-BaseProduct *--> Value
-BaseProduct *--> Category
+Product *--> Name
+Product *--> Description
+Product *--> Features
+Product *--> Value
+Product *--> Category
 
 ' Notes
 
