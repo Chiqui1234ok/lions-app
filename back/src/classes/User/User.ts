@@ -14,7 +14,7 @@ import Email from '../tinyTypes/Email';
 import Password from '../tinyTypes/Password';
 import { Name } from '../tinyTypes/Name';
 import Phone from '../tinyTypes/Phone';
-import { Role } from '../tinyTypes/Role';
+import { Roles } from '../tinyTypes/Role';
 import Note from '../tinyTypes/Note';
 import BaseUserModel from '../../models/MongoUser';
 import UserAuthentication from './UserAuthentication';
@@ -36,7 +36,7 @@ class User extends Client {
         protected thumbnail: string,
         protected userNotes: Note[],
         protected admNotes: Note[],
-        protected roles: Role[],
+        protected roles: Roles,
         protected jwt: string
     ) {
         // Set properties in base class
@@ -45,10 +45,13 @@ class User extends Client {
         this.jwt = jwt;
     }
 
+    
+    //
     public setCookies(c: Context): void {
         UserAuthentication.setCookies(c);
     }
 
+    //
     public async register(): Promise<User> {
         return await UserRegistration.register(this);
     }
