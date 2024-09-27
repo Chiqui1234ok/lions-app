@@ -20,8 +20,8 @@ class Email {
     }
 
     // Getters
-    public get(): Email {
-        return this;
+    public getEmail(): string {
+        return this.email;
     }
 
     // Setters
