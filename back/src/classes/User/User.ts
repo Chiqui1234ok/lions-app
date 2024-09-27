@@ -20,6 +20,8 @@ import BaseUserModel from '../../models/MongoUser';
 import UserAuthentication from './UserAuthentication';
 import UserRegistration from './UserRegistration';
 import Client from '../Client/Client';
+import Thumbnail from '../tinyTypes/Thumbnail';
+import JWT from '../tinyTypes/JWT';
 
 interface FindUser {
     field: string;
@@ -28,40 +30,29 @@ interface FindUser {
 
 class User extends Client {
 
+    private jwt: JWT;
+    readonly jwtExpiration: number = Math.floor(Date.now() / 1000) * 60 * 300; // Token expires in 300 minutes (5 hours)
+
     constructor(
         protected name: Name,
         protected phone: Phone,
         protected email: Email,
         protected password: Password,
-        protected thumbnail: string,
+        protected thumbnail: Thumbnail,
         protected userNotes: Note[],
         protected admNotes: Note[],
-        protected roles: Roles,
-        protected jwt: string
+        protected roles: Roles
     ) {
         // Set properties in base class
         super(name, phone, email, password, thumbnail, userNotes, admNotes, roles);
         // Set properties of User class
-        this.jwt = jwt;
+        this.jwt = new JWT(this.getEmail(), this.getRoles(), this.jwtExpiration);
     }
 
     
     //
     public setCookies(c: Context): void {
         UserAuthentication.setCookies(c);
-    }
-
-    //
-    public async register(): Promise<User> {
-        return await UserRegistration.register(this);
-    }
-
-    public async loginJWT(): Promise<string> {
-        return UserAuthentication.loginJWT(this);
-    }
-
-    public static async validateJWT(token: string): Promise<boolean> {
-        return await UserAuthentication.validateJWT(token);
     }
 
     // 2. HELPERS
