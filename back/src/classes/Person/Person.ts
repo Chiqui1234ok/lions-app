@@ -23,23 +23,7 @@ abstract class Person {
     public getThumbnail = (): Thumbnail => this.thumbnail;
     public getUserNotes = (): Note[] => this.userNotes;
     public getAdmNotes = (): Note[] => this.admNotes;
-
-    // Setters
-    public setName(names: string | string[]): void {
-        if(Array.isArray(names))
-            this.getName().set(names);
-        else
-            this.getName().add(names);
-    }
-    public setAlias(alias: string): void {
-        this.getName().setAlias(alias);
-    }
-    public setEmail(email: string): void {
-        this.getEmail().set(email);
-    }
-    public setThumbnail(thumbnailURL: string): void {
-        this.getThumbnail().set(thumbnailURL);
-    }
+    
 }
 
 export default Person;
