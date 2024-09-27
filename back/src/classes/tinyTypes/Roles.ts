@@ -4,8 +4,8 @@ class Roles {
     }
 
     // Getter
-    public get(): Roles {
-        return this;
+    public get(): Map<string, number> {
+        return this.role;
     }
 
     public getOne(query: string): number {

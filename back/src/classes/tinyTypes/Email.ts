@@ -20,7 +20,7 @@ class Email {
     }
 
     // Getters
-    public getEmail(): string {
+    public get(): string {
         return this.email;
     }
 
