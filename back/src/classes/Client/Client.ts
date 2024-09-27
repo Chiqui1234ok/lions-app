@@ -24,32 +24,6 @@ abstract class Client extends Person {
     // Getters
     public getPassword = (): Password => this.password;
     public getRoles = (): Roles => this.roles;
-
-    // Setters
-    public setName(names: string[]): void {
-        this.getName().set(names);
-    }
-    public addName(name: string): void {
-        this.getName().add(name);
-    }
-    public setAlias(alias: string): void {
-        this.getName().setAlias(alias);
-    }
-    public setEmail(email: string): void {
-        this.getEmail().set(email);
-    }
-    public setPassword(password: string): void {
-        this.getPassword().set(password);
-    }
-    public setThumbnail(thumbnailURL: string): void {
-        this.getThumbnail().set(thumbnailURL);
-    }
-    public setUserNotes(notes: Note[]): void {
-        this.getUserNotes().push(notes);
-    }
-    public setAdmNotes(notes: Note[]): void {
-        this.getAdmNotes().set(notes);
-    }
 }
 
 export default Client;
