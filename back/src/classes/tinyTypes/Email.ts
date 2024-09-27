@@ -3,6 +3,20 @@ class Email {
 
     }
 
+    // Getters
+    public get(): string {
+        return this.email;
+    }
+
+    // Setters
+    public set(email: string) {
+        const validEmail = this.validate();
+        if(validEmail)
+            this.email = email;
+        else throw new Error('This email is invalid, please, review it.');
+    }
+
+    // Methods
     /**
      * Validates any string checking if it's an email
      * 
@@ -17,19 +31,6 @@ class Email {
 
     public static toUnderscore(email: string): string {
         return email.replace(/[^a-zA-Z0-9]/g, '_');
-    }
-
-    // Getters
-    public get(): string {
-        return this.email;
-    }
-
-    // Setters
-    public set(email: string) {
-        const validEmail = this.validate();
-        if(validEmail)
-            this.email = email;
-        else throw new Error('This email is invalid, please, review it.');
     }
 }
 
