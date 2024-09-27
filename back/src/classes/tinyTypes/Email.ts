@@ -9,9 +9,9 @@ class Email {
      * @param {string} email
      * @returns {boolean} True if string contains '@' and '.<something>'.
     */
-    public static validate(email: string): boolean {
+    public validate(): boolean {
         const   regex = /^[^@]+@[^@]+\.[^@]+$/,
-                result: boolean = regex.test(email);
+                result: boolean = regex.test(this.email);
         return  result;
     }
 
@@ -26,7 +26,7 @@ class Email {
 
     // Setters
     public set(email: string) {
-        const validEmail = Email.validate(email);
+        const validEmail = this.validate();
         if(validEmail)
             this.email = email;
         else throw new Error('This email is invalid, please, review it.');
